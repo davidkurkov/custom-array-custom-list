@@ -7,7 +7,7 @@ package com.davidkurkov;
 
 class CustomArray implements list{
     int[] myArray;
-    boolean[] inputArray;
+    int[] inputArray;
 
     int memorySpots = 10;
     int increaseMemoryBy = 3;
@@ -15,15 +15,16 @@ class CustomArray implements list{
 
     CustomArray() {
         myArray = new int[memorySpots];
-        inputArray = new boolean[memorySpots];
+        inputArray = new int[memorySpots];
     }
 
     @Override
     public void insert(int value) {
-        checkOverflow();
+        myArray = checkOverflow(myArray);
+        inputArray = checkOverflow(inputArray);
         int emptyIndex = findEmptyIndex();
         myArray[emptyIndex] = value;
-        inputArray[emptyIndex] = true;
+        inputArray[emptyIndex] = 1;
     }
 
     @Override
@@ -31,17 +32,21 @@ class CustomArray implements list{
         int index = findIndexOfValue(value);
         if (index != -1) {
             myArray[index] = 0;
-            inputArray[index] = false;
-            cleanupArray();
+            inputArray[index] = 0;
+            myArray = cleanupArray(myArray);
+            inputArray = cleanupArray(inputArray);
         }
     }
 
     @Override
     public int size() {
         int count = 0;
-        for (int i=0; i < myArray.length; i++) {
-            if (myArray[i] != 0) {
+        for (int i=0; i < inputArray.length; i++) {
+            if (inputArray[i] != 0) {
                 count++;
+            }
+            else {
+                break;
             }
         }
         return count;
@@ -49,16 +54,18 @@ class CustomArray implements list{
 
     @Override
     public void clear() {
-        for (int i=0; i < myArray.length; i++) {
-            myArray[i] = 0;
-        }
+        myArray = clearArray(myArray);
+        inputArray = clearArray(inputArray);
     }
 
     @Override
     public void printElements() {
         String formattedElements = "";
         for (int i=0; i < myArray.length; i++) {
-            if (myArray[i] != 0) {
+            if (inputArray[i] == 0) {
+                break;
+            }
+            else {
                 if (i == 0) {
                     formattedElements += "" + myArray[i];
                 }
@@ -74,7 +81,7 @@ class CustomArray implements list{
     private int findEmptyIndex() {
         int emptyIndex = -1;
         for (int i=0; i < inputArray.length; i++) {
-            if (inputArray[i] == false) {
+            if (inputArray[i] == 0) {
                 emptyIndex = i;
                 break;
             }
@@ -102,53 +109,38 @@ class CustomArray implements list{
         }
     }
 
-    private void cleanupArray() {
-        int[] tempArray = new int[myArray.length];
+    private int[] cleanupArray(int[] array) {
+        int[] tempArray = new int[array.length];
         int tempArrayIndex = 0;
-        for (int i=0; i < myArray.length; i++) {
-            if (myArray[i] != 0) {
-                tempArray[tempArrayIndex] = myArray[i];
+        for (int i=0; i < array.length; i++) {
+            if (array[i] != 0) {
+                tempArray[tempArrayIndex] = array[i];
                 tempArrayIndex += 1;
             }
         }
-        myArray = tempArray;
-
-        boolean[] tempInputArray = new boolean[inputArray.length];
-        int tempInputArrayIndex = 0;
-        for (int i=0; i < inputArray.length; i++) {
-            if (inputArray[i] != false) {
-                tempInputArray[tempInputArrayIndex] = inputArray[i];
-                tempArrayIndex += 1;
-            }
-        }
-        inputArray = tempInputArray;
+        return tempArray;
     }
 
-    private void checkOverflow() {
-        if (myArray.length - size() <= memoryBuffer) {
+    private int[] checkOverflow(int[] array) {
+        if (array.length - size() <= memoryBuffer) {
             int tempArrayIndex = 0;
-            int newLength = myArray.length * increaseMemoryBy;
+            int newLength = array.length * increaseMemoryBy;
             int[] tempArray = new int[newLength];
-            for (int i=0; i < myArray.length; i++) {
-                if (myArray[i] != 0) {
-                    tempArray[tempArrayIndex] = myArray[i];
+            for (int i=0; i < array.length; i++) {
+                if (array[i] != 0) {
+                    tempArray[tempArrayIndex] = array[i];
                     tempArrayIndex += 1;
                 }
             }
-            myArray = tempArray;
+            return tempArray;
         }
+        return array;
+    }
 
-        if (inputArray.length - size() <= memoryBuffer) {
-            int tempArrayIndex = 0;
-            int newLength = inputArray.length * increaseMemoryBy;
-            boolean[] tempArray = new boolean[newLength];
-            for (int i=0; i < inputArray.length; i++) {
-                if (inputArray[i] != false) {
-                    tempArray[tempArrayIndex] = inputArray[i];
-                    tempArrayIndex += 1;
-                }
-            }
-            inputArray = tempArray;
+    private int[] clearArray(int[] array) {
+        for (int i=0; i < array.length; i++) {
+            array[i] = 0;
         }
+        return array;
     }
 }

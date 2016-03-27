@@ -3,12 +3,12 @@ package com.davidkurkov;
 public class Main {
 
     public static void main(String[] args) {
-        CustomArray myArray = new CustomArray();
-        testRobbsCriteria(myArray);
+//        CustomArray myArray = new CustomArray();
+//        testRobbsCriteria(myArray);
 //        testOverflow(myArray);
 //        System.out.println("\n");
-//        CustomList myList = new CustomList();
-//        testRobbsCriteria(myList);
+        CustomList myList = new CustomList();
+        testRobbsCriteria(myList);
 //        testOverflow(myList);
     }
 
@@ -22,6 +22,9 @@ public class Main {
         System.out.println(list.size());
         list.printElements();
         list.remove(3);
+        System.out.println(list.size());
+        list.printElements();
+        list.insert(0);
         System.out.println(list.size());
         list.printElements();
     }
