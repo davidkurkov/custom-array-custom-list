@@ -7,33 +7,32 @@ package com.davidkurkov;
 
 class CustomArray implements list{
     int[] myArray;
+    boolean[] inputArray;
+
+    int memorySpots = 10;
+    int increaseMemoryBy = 3;
+    int memoryBuffer = 3;
 
     CustomArray() {
-        myArray = new int[10];
+        myArray = new int[memorySpots];
+        inputArray = new boolean[memorySpots];
     }
 
     @Override
     public void insert(int value) {
-        if (isSupported(value)) {
-            checkOverflow();
-            myArray[findEmptyIndex()] = value;
-        }
-        else {
-            notSupportedMessage(value);
-        }
+        checkOverflow();
+        int emptyIndex = findEmptyIndex();
+        myArray[emptyIndex] = value;
+        inputArray[emptyIndex] = true;
     }
 
     @Override
     public void remove(int value) {
-        if (isSupported(value)) {
-            int index = findIndexOfValue(value);
-            if (index != -1) {
-                myArray[index] = 0;
-                cleanupArray();
-            }
-        }
-        else {
-            notSupportedMessage(value);
+        int index = findIndexOfValue(value);
+        if (index != -1) {
+            myArray[index] = 0;
+            inputArray[index] = false;
+            cleanupArray();
         }
     }
 
@@ -73,22 +72,14 @@ class CustomArray implements list{
     }
 
     private int findEmptyIndex() {
-        int emptyIndex = 0;
-        for (int i=0; i < myArray.length; i++) {
-            if (myArray[i] == 0) {
+        int emptyIndex = -1;
+        for (int i=0; i < inputArray.length; i++) {
+            if (inputArray[i] == false) {
                 emptyIndex = i;
                 break;
             }
         }
         return emptyIndex;
-    }
-
-    private boolean isSupported(int value) {
-        return value != 0;
-    }
-
-    private String notSupportedMessage(int value) {
-        throw new IllegalArgumentException("value: " + value + " is unsupported");
     }
 
     private int findIndexOfValue(int value) {
@@ -121,12 +112,22 @@ class CustomArray implements list{
             }
         }
         myArray = tempArray;
+
+        boolean[] tempInputArray = new boolean[inputArray.length];
+        int tempInputArrayIndex = 0;
+        for (int i=0; i < inputArray.length; i++) {
+            if (inputArray[i] != false) {
+                tempInputArray[tempInputArrayIndex] = inputArray[i];
+                tempArrayIndex += 1;
+            }
+        }
+        inputArray = tempInputArray;
     }
 
     private void checkOverflow() {
-        if (myArray.length - size() <= 3) {
+        if (myArray.length - size() <= memoryBuffer) {
             int tempArrayIndex = 0;
-            int newLength = myArray.length * 3;
+            int newLength = myArray.length * increaseMemoryBy;
             int[] tempArray = new int[newLength];
             for (int i=0; i < myArray.length; i++) {
                 if (myArray[i] != 0) {
@@ -135,6 +136,19 @@ class CustomArray implements list{
                 }
             }
             myArray = tempArray;
+        }
+
+        if (inputArray.length - size() <= memoryBuffer) {
+            int tempArrayIndex = 0;
+            int newLength = inputArray.length * increaseMemoryBy;
+            boolean[] tempArray = new boolean[newLength];
+            for (int i=0; i < inputArray.length; i++) {
+                if (inputArray[i] != false) {
+                    tempArray[tempArrayIndex] = inputArray[i];
+                    tempArrayIndex += 1;
+                }
+            }
+            inputArray = tempArray;
         }
     }
 }

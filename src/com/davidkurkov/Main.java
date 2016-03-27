@@ -5,11 +5,11 @@ public class Main {
     public static void main(String[] args) {
         CustomArray myArray = new CustomArray();
         testRobbsCriteria(myArray);
-        testOverflow(myArray);
-        System.out.println("\n");
-        CustomList myList = new CustomList();
-        testRobbsCriteria(myList);
-        testOverflow(myList);
+//        testOverflow(myArray);
+//        System.out.println("\n");
+//        CustomList myList = new CustomList();
+//        testRobbsCriteria(myList);
+//        testOverflow(myList);
     }
 
     private static void testRobbsCriteria(list list) {
