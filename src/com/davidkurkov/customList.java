@@ -4,42 +4,46 @@ package com.davidkurkov;
  * Created by david on 3/26/16.
  */
 class CustomList implements list{
-    Node headNode;
-    Node tailNode;
-
-    CustomList() {
-        headNode = new Node(0);
-        tailNode = headNode;
-    }
+    Node headNode = new Node();
+    Node tailNode = headNode;
+    boolean firstNode = true;
 
     @Override
     public void insert(int value) {
-        if (isSupported(value)) {
-            if (size() != 0) {
-                Node newNode = new Node(value);
-                tailNode.setNext(newNode);
-                tailNode = newNode;
-            }
-            else {
-                headNode.setValue(value);
-            }
+        if (firstNode) {
+            headNode.setValue(value);
+            firstNode = false;
         }
         else {
-            notSupportedMessage(value);
+            Node newNode = new Node();
+            newNode.setValue(value);
+            tailNode.setNext(newNode);
+            tailNode = newNode;
         }
     }
 
     @Override
     public void remove(int value) {
-        if (headNode.getVal() == value) {
+        if (headNode.getVal() == value && headNode.getNext() == null) {
+            clear();
+        }
+        else if (headNode.getVal() == value && headNode.getNext() != null) {
             headNode = headNode.getNext();
         }
         else {
             Node previousNode = headNode;
             Node currentNode = headNode.getNext();
-            while (true) {
+            while (true && currentNode != null) {
                 if (currentNode.getVal() == value) {
-                    previousNode.setNext(currentNode.getNext());
+                    if (currentNode.getNext() != null) {
+                        previousNode.setNext(currentNode.getNext());
+                    }
+                    else {
+                        previousNode.setNext(null);
+                        if (previousNode == headNode) {
+                            tailNode = headNode;
+                        }
+                    }
                     break;
                 }
                 previousNode = currentNode;
@@ -50,32 +54,35 @@ class CustomList implements list{
 
     @Override
     public int size() {
-        if (isEmpty()) {
+        if (firstNode) {
             return 0;
         }
-        if (headNode == tailNode) {
+        else if (headNode == tailNode) {
             return 1;
         }
-        int counter = 1;
-        Node currentNode = headNode.getNext();
-        while (currentNode != null) {
-            currentNode = currentNode.getNext();
-            counter += 1;
+        else {
+            int counter = 1;
+            Node currentNode = headNode.getNext();
+            while (currentNode != null) {
+                currentNode = currentNode.getNext();
+                counter += 1;
+            }
+            return counter;
         }
-        return counter;
     }
 
     @Override
     public void clear() {
-        headNode = new Node(0);
+        headNode = new Node();
         tailNode = headNode;
+        firstNode = true;
     }
 
     @Override
     public void printElements() {
         String formattedElements = "";
         Node currentNode = headNode;
-        if (currentNode.getVal() != 0) {
+        if (!firstNode) {
             while (currentNode != null) {
                 if (currentNode == headNode) {
                     formattedElements += "" + currentNode.getVal();
@@ -90,29 +97,9 @@ class CustomList implements list{
         System.out.println(formattedElements);
     }
 
-    private boolean isEmpty() {
-        if (headNode.getVal() == 0 && headNode == tailNode) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isSupported(int value) {
-        return value != 0;
-    }
-
-    private String notSupportedMessage(int value) {
-        throw new IllegalArgumentException("value: " + value + " is unsupported");
-    }
-
     class Node {
         int val;
         Node next;
-
-        Node(int value) {
-            val = value;
-            next = null;
-        }
 
         int getVal() {
             return val;

@@ -100,15 +100,6 @@ class CustomArray implements list{
         return index;
     }
 
-    private void prettyPrint(int elements) {
-        if (elements == 1) {
-            System.out.println("There is " + elements + " element.");
-        }
-        else {
-            System.out.println("There are " + elements + " elements.");
-        }
-    }
-
     private int[] cleanupArray(int[] array) {
         int[] tempArray = new int[array.length];
         int tempArrayIndex = 0;
