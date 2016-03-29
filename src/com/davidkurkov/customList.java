@@ -102,12 +102,12 @@ class CustomList implements list{
         Node next;
 
         int getVal() {
-            return val;
+            return this.val;
         }
 
         int setValue(int value) {
-            val = value;
-            return val;
+            this.val = value;
+            return this.val;
         }
 
         void setNext(Node next) {
@@ -115,7 +115,7 @@ class CustomList implements list{
         }
 
         Node getNext() {
-            return next;
+            return this.next;
         }
     }
 }
