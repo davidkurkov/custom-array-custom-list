@@ -3,15 +3,23 @@ package com.davidkurkov;
 public class Main {
 
     public static void main(String[] args) {
+        long startTimeArray = System.currentTimeMillis();
         CustomArray myArray = new CustomArray();
         testRobbsCriteria(myArray);
         testOverflow(myArray);
         testRandomCombination(myArray);
+        long endTimeArray   = System.currentTimeMillis();
+        long totalTimeArray = endTimeArray - startTimeArray;
+        System.out.println("Array: " + totalTimeArray / 1000 + "s");
         System.out.println("\n");
+        long startTimeList = System.currentTimeMillis();
         CustomList myList = new CustomList();
         testRobbsCriteria(myList);
         testOverflow(myList);
         testRandomCombination(myList);
+        long endTimeList   = System.currentTimeMillis();
+        long totalTimeList = endTimeList - startTimeList;
+        System.out.println("List: " + totalTimeList / 1000 + "s");
     }
 
     private static void testRobbsCriteria(list list) {
@@ -49,19 +57,17 @@ public class Main {
     }
 
     private static void testRandomCombination(list list) {
-        for (int i = 1; i < 345; i++) {
+        int elementsToAdd = 80000;
+        for (int i = 1; i < elementsToAdd; i++) {
+            list.insert(i);
+        }
+        list.printElements();
+        for (int i = 1; i < elementsToAdd; i++) {
             if (i % 2 == 0) {
-                list.insert(i);
-                System.out.println(list.size());
-            }
-            else {
                 list.remove(i);
             }
-            if (i == 273 || i == 332) {
-                list.printElements();
-                list.clear();
-            }
         }
+        list.printElements();
     }
 
 }
