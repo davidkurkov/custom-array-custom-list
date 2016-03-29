@@ -32,8 +32,6 @@ class CustomArray implements list{
         if (index != -1) {
             myArray[index] = 0;
             inputArray[index] = 0;
-            myArray = cleanupArray(myArray);
-            inputArray = cleanupArray(inputArray);
         }
     }
 
@@ -59,6 +57,8 @@ class CustomArray implements list{
 
     @Override
     public void printElements() {
+        myArray = cleanupArray(myArray);
+        inputArray = cleanupArray(inputArray);
         String formattedElements = "";
         for (int i=0; i < myArray.length; i++) {
             if (inputArray[i] == 0) {
