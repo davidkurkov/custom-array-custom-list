@@ -1,6 +1,5 @@
 package com.davidkurkov;
 
-
 /**
  * Created by david on 3/25/16.
  */
