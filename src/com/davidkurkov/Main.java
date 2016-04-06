@@ -63,7 +63,7 @@ public class Main {
             list.insert(i);
         }
         # it took me a bit to figure out what was taking so long in here.
-        # The problem is in printElements. Look up StringBuilder. That's how you should be doing strings in java.
+        # The problem is in printElements. Look up StringBuilder. That is how you should be doing strings in java.
         # You build your string with a StringBuilder, then call '.toString()' when ready to print it out.
         # I think that will cut down on how long this function is taking. Try timing just testRandomCombination with and
         # without a StringBuilder to verify.
