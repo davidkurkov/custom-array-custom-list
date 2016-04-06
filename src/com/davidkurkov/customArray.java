@@ -34,7 +34,7 @@ class CustomArray implements list{
         # You gotta do this one. You gotta feel the pain of working with arrays.
         # FEEL THE PAIN!!!!!
         # FEEL IT!!!!
-        # We'll do more stupid array tricks after you finish the calculator
+        # We will do more stupid array tricks after you finish the calculator
         if (index != -1) {
             myArray[index] = 0;
             inputArray[index] = 0;
