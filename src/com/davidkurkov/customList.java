@@ -4,8 +4,11 @@ package com.davidkurkov;
  * Created by david on 3/26/16.
  */
 class CustomList implements list{
+    # New lists should start with headNode = null
     Node headNode = new Node();
+    # same is true for tail node, which if you just set headNode to null, you will achieve with the line below
     Node tailNode = headNode;
+    # and check for null instead of using the firstNode bool below
     boolean firstNode = true;
 
     @Override
@@ -54,6 +57,8 @@ class CustomList implements list{
 
     @Override
     public int size() {
+        # I like the way you count the nodes below, but you should be storing size as a variable
+        # and just increment it when adding a new node, or decrementing it when you remove one.
         if (firstNode) {
             return 0;
         }
