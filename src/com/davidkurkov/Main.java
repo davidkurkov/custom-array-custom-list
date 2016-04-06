@@ -15,7 +15,7 @@ public class Main {
         long startTimeList = System.currentTimeMillis();
         CustomList myList = new CustomList();
         testRobbsCriteria(myList);
-        # Be sure to clear the list between tests, there is a five left over between these two guys.
+        // Be sure to clear the list between tests, there is a five left over between these two guys.
         testOverflow(myList);
         testRandomCombination(myList);
         long endTimeList   = System.currentTimeMillis();
@@ -62,11 +62,11 @@ public class Main {
         for (int i = 1; i < elementsToAdd; i++) {
             list.insert(i);
         }
-        # it took me a bit to figure out what was taking so long in here.
-        # The problem is in printElements. Look up StringBuilder. That is how you should be doing strings in java.
-        # You build your string with a StringBuilder, then call '.toString()' when ready to print it out.
-        # I think that will cut down on how long this function is taking. Try timing just testRandomCombination with and
-        # without a StringBuilder to verify.
+        // it took me a bit to figure out what was taking so long in here.
+        // The problem is in printElements. Look up StringBuilder. That is how you should be doing strings in java.
+        // You build your string with a StringBuilder, then call '.toString()' when ready to print it out.
+        // I think that will cut down on how long this function is taking. Try timing just testRandomCombination with and
+        // without a StringBuilder to verify.
         list.printElements();
         for (int i = 1; i < elementsToAdd; i++) {
             if (i % 2 == 0) {
