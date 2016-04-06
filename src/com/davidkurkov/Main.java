@@ -61,9 +61,15 @@ public class Main {
         for (int i = 1; i < elementsToAdd; i++) {
             list.insert(i);
         }
+        # it took me a bit to figure out what was taking so long in here.
+        # The problem is in printElements. Look up StringBuilder. That's how you should be doing strings in java.
+        # You build your string with a StringBuilder, then call '.toString()' when ready to print it out.
+        # I think that will cut down on how long this function is taking. Try timing just testRandomCombination with and
+        # without a StringBuilder to verify.
         list.printElements();
         for (int i = 1; i < elementsToAdd; i++) {
             if (i % 2 == 0) {
+                # Now THIS guy, the line below, is where all the time in this function should be going. At least for the array implementation.
                 list.remove(i);
             }
         }
