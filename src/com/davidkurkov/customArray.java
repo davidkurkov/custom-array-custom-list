@@ -4,7 +4,7 @@ package com.davidkurkov;
  * Created by david on 3/25/16.
  */
 
-class CustomArray implements list{
+class CustomArray implements list {
     int[] myArray;
     int[] inputArray;
     // Size should be a variable in here. 
@@ -44,6 +44,8 @@ class CustomArray implements list{
     @Override
     public int size() {
         // This function should just be returning whatever value your size variable is storing.
+        myArray = cleanupArray(myArray);
+        inputArray = cleanupArray(inputArray);
         int count = 0;
         for (int i=0; i < inputArray.length; i++) {
             if (inputArray[i] != 0) {
@@ -63,7 +65,7 @@ class CustomArray implements list{
     }
 
     @Override
-    public void printElements() {
+    public String printElements() {
         myArray = cleanupArray(myArray);
         inputArray = cleanupArray(inputArray);
         String formattedElements = "";
@@ -82,6 +84,7 @@ class CustomArray implements list{
         }
         formattedElements = "[" + formattedElements + "]";
         System.out.println(formattedElements);
+        return formattedElements;
     }
 
     private int findEmptyIndex() {
@@ -126,8 +129,8 @@ class CustomArray implements list{
             int[] tempArray = new int[newLength];
             for (int i=0; i < array.length; i++) {
                 if (array[i] != 0) { 
-                    # Don't check if it's empty, just overwrite. 
-                    # Checking is slower than assignment in all cases with base data types (int, bool, char, etc. (NOT including strings!))
+//                    # Don't check if it's empty, just overwrite.
+//                    # Checking is slower than assignment in all cases with base data types (int, bool, char, etc. (NOT including strings!))
                     tempArray[tempArrayIndex] = array[i];
                     tempArrayIndex += 1;
                 }

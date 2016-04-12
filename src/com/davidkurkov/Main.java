@@ -1,6 +1,8 @@
 package com.davidkurkov;
 
-public class Main {
+import junit.framework.TestCase;
+
+public class Main extends TestCase {
 
     public static void main(String[] args) {
         long startTimeArray = System.currentTimeMillis();
@@ -24,23 +26,32 @@ public class Main {
     }
 
     private static void testRobbsCriteria(list list) {
-        System.out.println(list.size());
-        list.printElements();
+        assertEquals(0, list.size());
+        assertEquals("[]", list.printElements());
+
         list.insert(3);
-        System.out.println(list.size());
-        list.printElements();
+        assertEquals(1, list.size());
+        assertEquals("[3]", list.printElements());
+
         list.insert(5);
-        System.out.println(list.size());
-        list.printElements();
+        assertEquals(2, list.size());
+        assertEquals("[3, 5]", list.printElements());
+
         list.remove(3);
-        System.out.println(list.size());
-        list.printElements();
+        assertEquals(1, list.size());
+        assertEquals("[5]", list.printElements());
+
         list.insert(0);
-        System.out.println(list.size());
-        list.printElements();
+        assertEquals(2, list.size());
+        assertEquals("[5, 0]", list.printElements());
+
         list.remove(0);
-        System.out.println(list.size());
-        list.printElements();
+        assertEquals(1, list.size());
+        assertEquals("[5]", list.printElements());
+
+        list.clear();
+        assertEquals(0, list.size());
+        assertEquals("[]", list.printElements());
     }
 
     private static void testOverflow(list list) {
@@ -70,7 +81,7 @@ public class Main {
         list.printElements();
         for (int i = 1; i < elementsToAdd; i++) {
             if (i % 2 == 0) {
-                # Now THIS guy, the line below, is where all the time in this function should be going. At least for the array implementation.
+//                # Now THIS guy, the line below, is where all the time in this function should be going. At least for the array implementation.
                 list.remove(i);
             }
         }

@@ -13,6 +13,6 @@ abstract interface list {
 
     void clear();
 
-    void printElements();
+    String printElements();
 
 }
