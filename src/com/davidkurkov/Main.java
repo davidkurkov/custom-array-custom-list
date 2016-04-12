@@ -13,6 +13,7 @@ public class Main extends TestCase {
         long endTimeArray   = System.currentTimeMillis();
         long totalTimeArray = endTimeArray - startTimeArray;
         System.out.println("Array: " + totalTimeArray / 1000 + "s");
+
         System.out.println("\n");
         long startTimeList = System.currentTimeMillis();
         CustomList myList = new CustomList();
@@ -49,23 +50,38 @@ public class Main extends TestCase {
         assertEquals(1, list.size());
         assertEquals("[5]", list.printElements());
 
+        list.remove(12);
+        assertEquals(1, list.size());
+        assertEquals("[5]", list.printElements());
+
         list.clear();
         assertEquals(0, list.size());
         assertEquals("[]", list.printElements());
     }
 
     private static void testOverflow(list list) {
-        list.printElements();
         for (int i = 1; i < 1500; i++) {
             list.insert(i);
         }
-        list.printElements();
+        String elementsBefore = list.printElements();
+        for (int i = 1; i < 1500; i++) {
+            assertTrue(elementsBefore.contains(String.valueOf(i)));
+        }
+
         for (int i = 10; i < 975; i++) {
             list.remove(i);
         }
-        list.printElements();
+        String elementsAfter = list.printElements();
+        for (int i = 0; i < 10; i++) {
+            assertTrue(elementsAfter.contains(String.valueOf(i)));
+        }
+        for (int i = 975; i < 1500; i++) {
+            assertTrue(elementsAfter.contains(String.valueOf(i)));
+        }
+
         list.clear();
-        list.printElements();
+        assertEquals(0, list.size());
+        assertEquals("[]", list.printElements());
     }
 
     private static void testRandomCombination(list list) {
@@ -73,19 +89,26 @@ public class Main extends TestCase {
         for (int i = 1; i < elementsToAdd; i++) {
             list.insert(i);
         }
-        // it took me a bit to figure out what was taking so long in here.
-        // The problem is in printElements. Look up StringBuilder. That is how you should be doing strings in java.
-        // You build your string with a StringBuilder, then call '.toString()' when ready to print it out.
-        // I think that will cut down on how long this function is taking. Try timing just testRandomCombination with and
-        // without a StringBuilder to verify.
-        list.printElements();
+        String elementsBefore = list.printElements();
+        for (int i = 1; i < elementsToAdd; i++) {
+            assertTrue(elementsBefore.contains(String.valueOf(i)));
+        }
+
         for (int i = 1; i < elementsToAdd; i++) {
             if (i % 2 == 0) {
-//                # Now THIS guy, the line below, is where all the time in this function should be going. At least for the array implementation.
                 list.remove(i);
             }
         }
-        list.printElements();
+
+        String elementsAfter = list.printElements();
+        for (int i = 1; i < elementsToAdd; i++) {
+            if (i % 2 != 0) {
+                assertTrue(elementsAfter.contains(String.valueOf(i)));
+            }
+        }
+        list.clear();
+        assertEquals(0, list.size());
+        assertEquals("[]", list.printElements());
     }
 
 }

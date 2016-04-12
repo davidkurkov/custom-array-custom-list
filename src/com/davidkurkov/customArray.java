@@ -6,144 +6,91 @@ package com.davidkurkov;
 
 class CustomArray implements list {
     int[] myArray;
-    int[] inputArray;
-    // Size should be a variable in here. 
-    // Every time you add one, increment the size. Every time you delete one, decrement it.
+    int index = 0;
     int memorySpots = 10;
-    int increaseMemoryBy = 3;
-    int memoryBuffer = 3;
+    int multiplierAndBuffer = 3;
 
     CustomArray() {
         myArray = new int[memorySpots];
-        inputArray = new int[memorySpots];
     }
 
     @Override
     public void insert(int value) {
-        myArray = checkOverflow(myArray);
-        inputArray = checkOverflow(inputArray);
-        int emptyIndex = findEmptyIndex();
-        myArray[emptyIndex] = value;
-        inputArray[emptyIndex] = 1;
+        checkOverflow();
+        myArray[index] = value;
+        index += 1;
     }
 
     @Override
     public void remove(int value) {
-        int index = findIndexOfValue(value);
-        // Once you found the spot, move all items to the right of it to the left one space.
-        // You gotta do this one. You gotta feel the pain of working with arrays.
-        // FEEL THE PAIN!!!!!
-        // FEEL IT!!!!
-        // We will do more stupid array tricks after you finish the calculator
-        if (index != -1) {
-            myArray[index] = 0;
-            inputArray[index] = 0;
+        int valueOfIndex = findIndexOfValue(value);
+        if (valueOfIndex != -1) {
+            int count = valueOfIndex;
+            while (count < index) {
+                myArray[count] = myArray[count+1];
+                count += 1;
+            }
+            index -= 1;
         }
     }
 
     @Override
     public int size() {
-        // This function should just be returning whatever value your size variable is storing.
-        myArray = cleanupArray(myArray);
-        inputArray = cleanupArray(inputArray);
-        int count = 0;
-        for (int i=0; i < inputArray.length; i++) {
-            if (inputArray[i] != 0) {
-                count++;
-            }
-            else {
-                break;
-            }
-        }
-        return count;
+        return index;
     }
 
     @Override
     public void clear() {
-        myArray = clearArray(myArray);
-        inputArray = clearArray(inputArray);
+        myArray = new int[memorySpots];
+        index = 0;
+        int memorySpots = 10;
+        int multiplierAndBuffer = 3;
     }
 
     @Override
     public String printElements() {
-        myArray = cleanupArray(myArray);
-        inputArray = cleanupArray(inputArray);
-        String formattedElements = "";
-        for (int i=0; i < myArray.length; i++) {
-            if (inputArray[i] == 0) {
-                break;
-            }
-            else {
+        StringBuilder elements = new StringBuilder();
+        if (index == 0) {
+            elements.append("[]");
+        }
+        else {
+            for (int i=0; i < index; i++) {
                 if (i == 0) {
-                    formattedElements += "" + myArray[i];
+                    elements.append(myArray[i]);
                 }
                 else {
-                    formattedElements += ", " + myArray[i];
+                    elements.append(", ");
+                    elements.append(myArray[i]);
                 }
             }
+            elements.insert(0, "[");
+            elements.append("]");
         }
-        formattedElements = "[" + formattedElements + "]";
-        System.out.println(formattedElements);
-        return formattedElements;
-    }
-
-    private int findEmptyIndex() {
-        // If you store your max position index as a variable instead of using a separate array, then you should never need this function
-        int emptyIndex = -1;
-        for (int i=0; i < inputArray.length; i++) {
-            if (inputArray[i] == 0) {
-                emptyIndex = i;
-                break;
-            }
-        }
-        return emptyIndex;
+        System.out.println(elements.toString());
+        return elements.toString();
     }
 
     private int findIndexOfValue(int value) {
-        int index = -1;
-        for (int i=0; i < myArray.length; i++) {
+        int indexOfValue = -1;
+        for (int i=0; i < index; i++) {
             if (myArray[i] == value) {
-                index = i;
+                indexOfValue = i;
                 break;
             }
         }
-        return index;
+        return indexOfValue;
     }
 
-    private int[] cleanupArray(int[] array) {
-        int[] tempArray = new int[array.length];
-        int tempArrayIndex = 0;
-        for (int i=0; i < array.length; i++) {
-            if (array[i] != 0) {
-                tempArray[tempArrayIndex] = array[i];
+    private void checkOverflow() {
+        if (myArray.length - size() <= multiplierAndBuffer) {
+            int tempArrayIndex = 0;
+            int newLength = myArray.length * multiplierAndBuffer;
+            int[] tempArray = new int[newLength];
+            for (int i=0; i < size(); i++) {
+                tempArray[tempArrayIndex] = myArray[i];
                 tempArrayIndex += 1;
             }
+            myArray = tempArray;
         }
-        return tempArray;
-    }
-
-    private int[] checkOverflow(int[] array) {
-        if (array.length - size() <= memoryBuffer) {
-            int tempArrayIndex = 0;
-            int newLength = array.length * increaseMemoryBy;
-            int[] tempArray = new int[newLength];
-            for (int i=0; i < array.length; i++) {
-                if (array[i] != 0) { 
-//                    # Don't check if it's empty, just overwrite.
-//                    # Checking is slower than assignment in all cases with base data types (int, bool, char, etc. (NOT including strings!))
-                    tempArray[tempArrayIndex] = array[i];
-                    tempArrayIndex += 1;
-                }
-            }
-            return tempArray;
-        }
-        return array;
-    }
-
-    private int[] clearArray(int[] array) {
-        for (int i=0; i < array.length; i++) {
-            array[i] = 0;
-        }
-        return array;
     }
 }
