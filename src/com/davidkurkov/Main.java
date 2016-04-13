@@ -18,7 +18,6 @@ public class Main extends TestCase {
         long startTimeList = System.currentTimeMillis();
         CustomList myList = new CustomList();
         testRobbsCriteria(myList);
-        // Be sure to clear the list between tests, there is a five left over between these two guys.
         testOverflow(myList);
         testRandomCombination(myList);
         long endTimeList   = System.currentTimeMillis();

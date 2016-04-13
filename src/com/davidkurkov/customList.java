@@ -5,17 +5,16 @@ package com.davidkurkov;
  */
 class CustomList implements list{
 //    # New lists should start with headNode = null
-    Node headNode = new Node();
-//    # same is true for tail node, which if you just set headNode to null, you will achieve with the line below
+    Node headNode = null;
     Node tailNode = headNode;
-//    # and check for null instead of using the firstNode bool below
-    boolean firstNode = true;
+    int size = 0;
 
     @Override
     public void insert(int value) {
-        if (firstNode) {
+        if (headNode == null) {
+            headNode = new Node();
             headNode.setValue(value);
-            firstNode = false;
+            tailNode = headNode;
         }
         else {
             Node newNode = new Node();
@@ -23,20 +22,23 @@ class CustomList implements list{
             tailNode.setNext(newNode);
             tailNode = newNode;
         }
+        size += 1;
     }
 
     @Override
     public void remove(int value) {
-        if (headNode.getVal() == value && headNode.getNext() == null) {
+        if (size == 1 && headNode.getVal() == value) {
             clear();
+            return;
         }
         else if (headNode.getVal() == value && headNode.getNext() != null) {
             headNode = headNode.getNext();
+            size -= 1;
         }
         else {
             Node previousNode = headNode;
             Node currentNode = headNode.getNext();
-            while (true && currentNode != null) {
+            while (currentNode != null) {
                 if (currentNode.getVal() == value) {
                     if (currentNode.getNext() != null) {
                         previousNode.setNext(currentNode.getNext());
@@ -47,6 +49,7 @@ class CustomList implements list{
                             tailNode = headNode;
                         }
                     }
+                    size -= 1;
                     break;
                 }
                 previousNode = currentNode;
@@ -57,50 +60,36 @@ class CustomList implements list{
 
     @Override
     public int size() {
-//        # I like the way you count the nodes below, but you should be storing size as a variable
-//        # and just increment it when adding a new node, or decrementing it when you remove one.
-        if (firstNode) {
-            return 0;
-        }
-        else if (headNode == tailNode) {
-            return 1;
-        }
-        else {
-            int counter = 1;
-            Node currentNode = headNode.getNext();
-            while (currentNode != null) {
-                currentNode = currentNode.getNext();
-                counter += 1;
-            }
-            return counter;
-        }
+        return size;
     }
 
     @Override
     public void clear() {
-        headNode = new Node();
+        headNode = null;
         tailNode = headNode;
-        firstNode = true;
+        size = 0;
     }
 
     @Override
     public String printElements() {
-        String formattedElements = "";
-        Node currentNode = headNode;
-        if (!firstNode) {
+        StringBuilder elements = new StringBuilder();
+        if (size == 0) {
+            elements.append("[]");
+        }
+        else {
+            Node currentNode = headNode;
             while (currentNode != null) {
-                if (currentNode == headNode) {
-                    formattedElements += "" + currentNode.getVal();
+                if (currentNode != headNode) {
+                    elements.append(", ");
                 }
-                else {
-                    formattedElements += ", " + currentNode.getVal();
-                }
+                elements.append(currentNode.getVal());
                 currentNode = currentNode.getNext();
             }
+            elements.insert(0, "[");
+            elements.append("]");
         }
-        formattedElements = "[" + formattedElements + "]";
-        System.out.println(formattedElements);
-        return formattedElements;
+        System.out.println(elements.toString());
+        return elements.toString();
     }
 
     class Node {
