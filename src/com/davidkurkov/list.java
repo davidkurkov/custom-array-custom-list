@@ -5,9 +5,9 @@ package com.davidkurkov;
  */
 abstract interface list {
 
-    void insert(int value);
+    void insert(Number value);
 
-    void remove(int value);
+    void remove(Number value);
 
     int size();
 

@@ -5,62 +5,62 @@ package com.davidkurkov;
  */
 
 class CustomArray implements list {
-    int[] myArray;
+    Number[] myArray;
     int index = 0;
     int memorySpots = 10;
     int multiplierAndBuffer = 3;
 
     CustomArray() {
-        myArray = new int[memorySpots];
+        this.myArray = new Number[this.memorySpots];
     }
 
     @Override
-    public void insert(int value) {
+    public void insert(Number value) {
         checkOverflow();
-        myArray[index] = value;
-        index += 1;
+        this.myArray[index] = value;
+        this.index += 1;
     }
 
     @Override
-    public void remove(int value) {
+    public void remove(Number value) {
         int valueOfIndex = findIndexOfValue(value);
         if (valueOfIndex != -1) {
             int count = valueOfIndex;
-            while (count < index) {
-                myArray[count] = myArray[count+1];
+            while (count < this.index) {
+                this.myArray[count] = this.myArray[count+1];
                 count += 1;
             }
-            index -= 1;
+            this.index -= 1;
         }
     }
 
     @Override
     public int size() {
-        return index;
+        return this.index;
     }
 
     @Override
     public void clear() {
-        myArray = new int[memorySpots];
-        index = 0;
-        int memorySpots = 10;
-        int multiplierAndBuffer = 3;
+        this.myArray = new Number[memorySpots];
+        this.index = 0;
+        this.memorySpots = 10;
+        this.multiplierAndBuffer = 3;
     }
 
     @Override
     public String printElements() {
         StringBuilder elements = new StringBuilder();
-        if (index == 0) {
+        if (this.index == 0) {
             elements.append("[]");
         }
         else {
-            for (int i=0; i < index; i++) {
+            for (int i=0; i < this.index; i++) {
                 if (i == 0) {
-                    elements.append(myArray[i]);
+                    elements.append(this.myArray[i]);
                 }
                 else {
                     elements.append(", ");
-                    elements.append(myArray[i]);
+                    elements.append(this.myArray[i]);
                 }
             }
             elements.insert(0, "[");
@@ -70,10 +70,10 @@ class CustomArray implements list {
         return elements.toString();
     }
 
-    private int findIndexOfValue(int value) {
+    private int findIndexOfValue(Number value) {
         int indexOfValue = -1;
-        for (int i=0; i < index; i++) {
-            if (myArray[i] == value) {
+        for (int i=0; i < this.index; i++) {
+            if (this.myArray[i] == value) {
                 indexOfValue = i;
                 break;
             }
@@ -82,15 +82,15 @@ class CustomArray implements list {
     }
 
     private void checkOverflow() {
-        if (myArray.length - size() <= multiplierAndBuffer) {
+        if (this.myArray.length - size() <= this.multiplierAndBuffer) {
             int tempArrayIndex = 0;
-            int newLength = myArray.length * multiplierAndBuffer;
-            int[] tempArray = new int[newLength];
+            int newLength = this.myArray.length * this.multiplierAndBuffer;
+            Number[] tempArray = new Number[newLength];
             for (int i=0; i < size(); i++) {
-                tempArray[tempArrayIndex] = myArray[i];
+                tempArray[tempArrayIndex] = this.myArray[i];
                 tempArrayIndex += 1;
             }
-            myArray = tempArray;
+            this.myArray = tempArray;
         }
     }
 }

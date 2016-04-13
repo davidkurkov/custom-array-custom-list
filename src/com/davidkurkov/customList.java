@@ -10,7 +10,7 @@ class CustomList implements list{
     int size = 0;
 
     @Override
-    public void insert(int value) {
+    public void insert(Number value) {
         if (headNode == null) {
             headNode = new Node();
             headNode.setValue(value);
@@ -26,7 +26,7 @@ class CustomList implements list{
     }
 
     @Override
-    public void remove(int value) {
+    public void remove(Number value) {
         if (size == 1 && headNode.getVal() == value) {
             clear();
             return;
@@ -93,14 +93,14 @@ class CustomList implements list{
     }
 
     class Node {
-        int val;
+        Number val;
         Node next;
 
-        int getVal() {
+        Number getVal() {
             return this.val;
         }
 
-        int setValue(int value) {
+        Number setValue(Number value) {
             this.val = value;
             return this.val;
         }

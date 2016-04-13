@@ -33,25 +33,29 @@ public class Main extends TestCase {
         assertEquals(1, list.size());
         assertEquals("[3]", list.printElements());
 
-        list.insert(5);
+        list.insert(5.9);
         assertEquals(2, list.size());
-        assertEquals("[3, 5]", list.printElements());
+        assertEquals("[3, 5.9]", list.printElements());
 
         list.remove(3);
         assertEquals(1, list.size());
-        assertEquals("[5]", list.printElements());
+        assertEquals("[5.9]", list.printElements());
 
         list.insert(0);
         assertEquals(2, list.size());
-        assertEquals("[5, 0]", list.printElements());
+        assertEquals("[5.9, 0]", list.printElements());
 
         list.remove(0);
         assertEquals(1, list.size());
-        assertEquals("[5]", list.printElements());
+        assertEquals("[5.9]", list.printElements());
 
         list.remove(12);
         assertEquals(1, list.size());
-        assertEquals("[5]", list.printElements());
+        assertEquals("[5.9]", list.printElements());
+
+        list.remove(1.8);
+        assertEquals(1, list.size());
+        assertEquals("[5.9]", list.printElements());
 
         list.clear();
         assertEquals(0, list.size());
