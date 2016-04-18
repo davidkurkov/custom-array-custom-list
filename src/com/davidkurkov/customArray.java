@@ -85,6 +85,7 @@ class CustomArray implements list {
         if (this.myArray.length - size() <= this.multiplierAndBuffer) {
             int tempArrayIndex = 0;
             int newLength = this.myArray.length * this.multiplierAndBuffer;
+            memorySpots = newLength;
             Number[] tempArray = new Number[newLength];
             for (int i=0; i < size(); i++) {
                 tempArray[tempArrayIndex] = this.myArray[i];
@@ -92,5 +93,18 @@ class CustomArray implements list {
             }
             this.myArray = tempArray;
         }
+    }
+
+    @Override
+    public void reverse() {
+        Number[] tempArray = new Number[myArray.length];
+        int myArrayPointer = index - 1;
+
+        for (int i=0; i < index; i++) {
+            tempArray[i] = myArray[myArrayPointer];
+            myArrayPointer -= 1;
+        }
+
+        myArray = tempArray;
     }
 }

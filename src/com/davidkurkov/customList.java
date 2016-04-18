@@ -92,6 +92,11 @@ class CustomList implements list{
         return elements.toString();
     }
 
+    @Override
+    public void reverse() {
+        return;
+    }
+
     class Node {
         Number val;
         Node next;

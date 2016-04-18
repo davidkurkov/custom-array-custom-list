@@ -7,6 +7,7 @@ public class Main extends TestCase {
     public static void main(String[] args) {
         long startTimeArray = System.currentTimeMillis();
         CustomArray myArray = new CustomArray();
+        testReverse(myArray);
         testRobbsCriteria(myArray);
         testOverflow(myArray);
         testRandomCombination(myArray);
@@ -109,6 +110,18 @@ public class Main extends TestCase {
                 assertTrue(elementsAfter.contains(String.valueOf(i)));
             }
         }
+        list.clear();
+        assertEquals(0, list.size());
+        assertEquals("[]", list.printElements());
+    }
+
+    private static void testReverse(list list) {
+        for (int i = 1; i < 10; i++) {
+            list.insert(i);
+        }
+        assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9]", list.printElements());
+        list.reverse();
+        assertEquals("[9, 8, 7, 6, 5, 4, 3, 2, 1]", list.printElements());
         list.clear();
         assertEquals(0, list.size());
         assertEquals("[]", list.printElements());

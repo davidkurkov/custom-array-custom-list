@@ -13,6 +13,8 @@ abstract interface list {
 
     void clear();
 
+    void reverse();
+
     String printElements();
 
 }
