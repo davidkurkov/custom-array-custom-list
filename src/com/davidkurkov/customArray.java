@@ -97,14 +97,11 @@ class CustomArray implements list {
 
     @Override
     public void reverse() {
-        Number[] tempArray = new Number[myArray.length];
-        int myArrayPointer = index - 1;
-
-        for (int i=0; i < index; i++) {
-            tempArray[i] = myArray[myArrayPointer];
-            myArrayPointer -= 1;
+        Number value;
+        for (int i=0; i < this.index / 2; i++) {
+            value = this.myArray[i];
+            this.myArray[i] = this.myArray[this.index - 1 - i];
+            this.myArray[this.index - 1 - i] = value;
         }
-
-        myArray = tempArray;
     }
 }
