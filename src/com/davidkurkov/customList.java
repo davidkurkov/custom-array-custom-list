@@ -94,7 +94,19 @@ class CustomList implements list{
 
     @Override
     public void reverse() {
-        return;
+        Node currentNode = headNode;
+        Node previousNode = null;
+        while (currentNode.getNext() != null) {
+            Node nextNode = currentNode.getNext();
+            currentNode.setNext(previousNode);
+            previousNode = nextNode;
+            nextNode = previousNode.getNext();
+            previousNode.setNext(currentNode);
+            currentNode = nextNode;
+
+        }
+        currentNode.setNext(previousNode);
+        headNode = currentNode;
     }
 
     class Node {

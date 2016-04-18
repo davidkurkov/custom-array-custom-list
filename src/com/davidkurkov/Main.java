@@ -18,6 +18,7 @@ public class Main extends TestCase {
         System.out.println("\n");
         long startTimeList = System.currentTimeMillis();
         CustomList myList = new CustomList();
+        testReverse(myList);
         testRobbsCriteria(myList);
         testOverflow(myList);
         testRandomCombination(myList);
