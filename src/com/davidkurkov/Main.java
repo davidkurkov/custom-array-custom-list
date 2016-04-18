@@ -7,6 +7,7 @@ public class Main extends TestCase {
     public static void main(String[] args) {
         long startTimeArray = System.currentTimeMillis();
         CustomArray myArray = new CustomArray();
+        testReverse(myArray);
         testRobbsCriteria(myArray);
         testOverflow(myArray);
         testRandomCombination(myArray);
@@ -17,8 +18,8 @@ public class Main extends TestCase {
         System.out.println("\n");
         long startTimeList = System.currentTimeMillis();
         CustomList myList = new CustomList();
+        testReverse(myList);
         testRobbsCriteria(myList);
-        // Be sure to clear the list between tests, there is a five left over between these two guys.
         testOverflow(myList);
         testRandomCombination(myList);
         long endTimeList   = System.currentTimeMillis();
@@ -34,25 +35,29 @@ public class Main extends TestCase {
         assertEquals(1, list.size());
         assertEquals("[3]", list.printElements());
 
-        list.insert(5);
+        list.insert(5.9);
         assertEquals(2, list.size());
-        assertEquals("[3, 5]", list.printElements());
+        assertEquals("[3, 5.9]", list.printElements());
 
         list.remove(3);
         assertEquals(1, list.size());
-        assertEquals("[5]", list.printElements());
+        assertEquals("[5.9]", list.printElements());
 
         list.insert(0);
         assertEquals(2, list.size());
-        assertEquals("[5, 0]", list.printElements());
+        assertEquals("[5.9, 0]", list.printElements());
 
         list.remove(0);
         assertEquals(1, list.size());
-        assertEquals("[5]", list.printElements());
+        assertEquals("[5.9]", list.printElements());
 
         list.remove(12);
         assertEquals(1, list.size());
-        assertEquals("[5]", list.printElements());
+        assertEquals("[5.9]", list.printElements());
+
+        list.remove(1.8);
+        assertEquals(1, list.size());
+        assertEquals("[5.9]", list.printElements());
 
         list.clear();
         assertEquals(0, list.size());
@@ -106,6 +111,18 @@ public class Main extends TestCase {
                 assertTrue(elementsAfter.contains(String.valueOf(i)));
             }
         }
+        list.clear();
+        assertEquals(0, list.size());
+        assertEquals("[]", list.printElements());
+    }
+
+    private static void testReverse(list list) {
+        for (int i = 1; i < 10; i++) {
+            list.insert(i);
+        }
+        assertEquals("[1, 2, 3, 4, 5, 6, 7, 8, 9]", list.printElements());
+        list.reverse();
+        assertEquals("[9, 8, 7, 6, 5, 4, 3, 2, 1]", list.printElements());
         list.clear();
         assertEquals(0, list.size());
         assertEquals("[]", list.printElements());
